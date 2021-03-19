@@ -40,7 +40,8 @@ CREATE TABLE `Nurse Table` (
 	`Shift Days` DATETIME NOT NULL,
 	`Shift timing` TIMESTAMP NOT NULL,
 	`Position` VARCHAR(255) NOT NULL,
-	`Salary` FLOAT NOT NULL
+	`Salary` FLOAT NOT NULL,
+	PRIMARY KEY (`Nurse Id`)
 );
 
 CREATE TABLE `Room Table` (
@@ -101,4 +102,3 @@ ALTER TABLE `Doctor Table` ADD CONSTRAINT `Doctor Table_fk0` FOREIGN KEY (`Patie
 ALTER TABLE `Admitting Table` ADD CONSTRAINT `Admitting Table_fk0` FOREIGN KEY (`Patient Id`) REFERENCES `Patient Table`(`Patient Id`);
 
 ALTER TABLE `Admitting Table` ADD CONSTRAINT `Admitting Table_fk1` FOREIGN KEY (`Doctor Id`) REFERENCES `Doctor Table`(`Doctor Id`);
-
