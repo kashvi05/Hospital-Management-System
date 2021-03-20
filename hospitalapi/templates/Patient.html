@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{%extends 'index.html' %}
+{%load static%}
+{%block content%}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Hospital Management System!</title>
+  </head>
+
+  <body>
+
+      <center>
+         <h1>Patient table</h1>
+         <hr>
+         <a style="color:white; background-color:rgb(30,142,62);" class="btn btn-primary  btn-sm btn-block"
+     			href="#"><b>Add Patient</b></a>
+          <p></p>
+         <table border='5'>
+             <tr>
+               <th>Patient Id</th>
+               <th>Patient Name</th>
+               <th>Phone</th>
+          </tr>
+               {% for data in Patientmodel%}
+               <tr>
+               <td>
+                 {{data.patId}}
+               </td>
+               <td>
+                 {{data.patName}}
+               </td>
+               <td>
+                 {{data.phone}}
+               </td>
+               {%endfor%}
+             </tr>
+         </table>
+
+
+      </center>
+  </body>
+
+</html>
+  {% endblock %}
