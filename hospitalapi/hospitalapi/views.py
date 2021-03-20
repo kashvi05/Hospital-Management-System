@@ -12,7 +12,11 @@ def showPatient(request):
         serialize=Serializationclass(results,many=True)
         return Response(serialize.data)
 
+def displayHome(request):
+    return render(request,'index.html')
+
+
 def displaydata(request):
     callapi=requests.get('http://127.0.0.1:8000/show')
     results=callapi.json()
-    return render(request,'index.html',{'Patientmodel':results})
+    return render(request,'Patient.html',{'Patientmodel':results})
