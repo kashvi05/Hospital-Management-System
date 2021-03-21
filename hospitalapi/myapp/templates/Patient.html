@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{%extends 'index.html' %}
+{%load static%}
+{%block content%}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Hospital Management System!</title>
+  </head>
+
+  <body>
+
+      <center>
+         <h1>Patient table</h1>
+         <hr>
+         <a style="color:white; background-color:rgb(30,142,62);" class="btn btn-primary btn-sm btn-block"
+     			href="{% url 'myapp:create_patient' %}"><b>Add Patient</b></a>
+          <p></p>
+        <div class="container">
+
+         <table class='table table-striped table-hover'>
+             <tr>
+               <th scope='col'>Patient Id</th>
+               <th scope='col'>Patient Name</th>
+               <th scope='col'>Phone</th>
+               <th scope='col'>Update</th>
+               <th scope='col'>Delete</th>
+          </tr>
+               {% for data in Patientmodel%}
+               <tr scope='row'>
+               <td >
+                 {{data.patId}}
+               </td>
+               <td>
+                 {{data.patName}}
+               </td>
+               <td>
+                 {{data.phone}}
+               </td>
+               <td><a style="color:white; background-color:rgb(26,115,232);" class="btn btn-sm btn-info"
+     							href="#"><b>Update</b></a></td>
+     					<td><a style="color:white; background-color:rgb(217,48,37);" class="btn btn-sm btn-danger"
+     							href="#"><b>Delete</b></a></td>
+               {%endfor%}
+             </tr>
+         </table>
+  </div>
+
+      </center>
+  </body>
+
+</html>
+  {% endblock %}
