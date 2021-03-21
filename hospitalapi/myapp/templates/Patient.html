@@ -9,6 +9,15 @@
   </head>
 
   <body>
+    {% if messages %}
+       <div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}><div class="alert alert-success" role="alert">
+         {{ message }}
+    </div></div>
+    {% endfor %}
+  </div>
+     {% endif %}
 
       <center>
          <h1>Patient table</h1>
@@ -38,12 +47,13 @@
                  {{data.phone}}
                </td>
                <td><a style="color:white; background-color:rgb(26,115,232);" class="btn btn-sm btn-info"
-     							href="#"><b>Update</b></a></td>
+     							href="{%url 'myapp:update_patient' patId%}"><b>Update</b></a></td>
      					<td><a style="color:white; background-color:rgb(217,48,37);" class="btn btn-sm btn-danger"
      							href="#"><b>Delete</b></a></td>
                {%endfor%}
              </tr>
          </table>
+
   </div>
 
       </center>
