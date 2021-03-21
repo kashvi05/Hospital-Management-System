@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+
 @api_view(['GET'])
 def showPatient(request):
     if request.method=='GET':
@@ -33,8 +34,22 @@ def create_patient(request):
         form=PatientForm(request.POST,instance=inst)
         if form.is_valid():
             form.save()
-            messages.info(request, f"New patient created successfully!!")
+            messages.info(request,"New patient created successfully!!")
             return redirect('/patient')
-        messages.error(request,'Invalid!')
+
+    context={'form':form}
+    return render(request,'create_patient.html',context)
+
+def update_patient(request,pk):
+    curr_patient=patient.objects.get(id=pk)
+    name=curr_patient.patName
+    form =patientForm(initial={'patName':name,'phone':curr_patient.phone})
+    if request.method == 'POST':
+        form = PatientForm(request.POST,instance=curr_patient)
+        if form.is_valid():
+            form.save()
+            messages.error(request, f"{name} updated successfully!!")
+            return redirect('/patient')
+
     context={'form':form}
     return render(request,'create_patient.html',context)
