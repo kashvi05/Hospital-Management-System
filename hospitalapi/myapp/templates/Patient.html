@@ -47,9 +47,9 @@
                  {{data.phone}}
                </td>
                <td><a style="color:white; background-color:rgb(26,115,232);" class="btn btn-sm btn-info"
-     							href="{%url 'myapp:update_patient' patId%}"><b>Update</b></a></td>
+     							href="{%url 'myapp:update_patient' data.patId%}"><b>Update</b></a></td>
      					<td><a style="color:white; background-color:rgb(217,48,37);" class="btn btn-sm btn-danger"
-     							href="#"><b>Delete</b></a></td>
+     							href="{%url 'myapp:delete_patient' data.patId %}"><b>Delete</b></a></td>
                {%endfor%}
              </tr>
          </table>

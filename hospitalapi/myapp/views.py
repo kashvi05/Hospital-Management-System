@@ -41,9 +41,9 @@ def create_patient(request):
     return render(request,'create_patient.html',context)
 
 def update_patient(request,pk):
-    curr_patient=patient.objects.get(id=pk)
+    curr_patient=Patientmodel.objects.get(patId=pk)
     name=curr_patient.patName
-    form =patientForm(initial={'patName':name,'phone':curr_patient.phone})
+    form =PatientForm(initial={'patId':curr_patient.patId,'patName':name,'phone':curr_patient.phone})
     if request.method == 'POST':
         form = PatientForm(request.POST,instance=curr_patient)
         if form.is_valid():
@@ -52,4 +52,14 @@ def update_patient(request,pk):
             return redirect('/patient')
 
     context={'form':form}
-    return render(request,'create_patient.html',context)
+    return render(request,'update_patient.html',context)
+
+def delete_patient(request,pk):
+    curr_patient=Patientmodel.objects.get(patId=pk)
+    name=curr_patient.patName
+    if request.method=="POST":
+        curr_patient.delete()
+        messages.error(request, f"{name} deleted successfully!!")
+        return redirect('/patient')
+    context = {'item': curr_patient}
+    return render(request, 'delete.html', context)
