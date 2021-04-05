@@ -20,38 +20,36 @@
      {% endif %}
 
       <center>
-         <h1>Patient table</h1>
+         <h1>Nurse table</h1>
          <hr>
          <a style="color:white; background-color:rgb(30,142,62);" class="btn btn-primary btn-sm btn-block"
-     			href="{% url 'myapp:create_patient' %}"><b>Add Patient</b></a>
+     			href="{% url 'myapp:create_nurse' %}"><b>Add Nurse</b></a>
           <p></p>
         <div class="container">
 
          <table class='table table-striped table-hover'>
              <tr>
-               <th scope='col'>Patient Id</th>
-               <th scope='col'>Patient Name</th>
+               <th scope='col'>Nurse Id</th>
+               <th scope='col'>Nurse Name</th>
                <th scope='col'>Gender</th>
                <th scope='col'>Age</th>
-               <th scope='col'>Blood Group</th>
-               <th scope='col'>Address</th>
-               <th scope='col'>Patient Contact No</th>
-               <th scope='col'>Residence No</th>
-               <th scope='col'>Email ID</th>
-               <th scope='col'>Emergency Number</th>
-               <th scope='col'>Emergency Contact Name</th>
-               <th scope='col'>Purpose</th>
-               <th scope='col'>Emergency Patient</th>
+               <th scope='col'>Phone Number</th>
+               <th scope='col'>Joining Date</th>
+               <th scope='col'>Shift Days</th>
+               <th scope='col'>Shift timing</th>
+               <th scope='col'>Position</th>
+               <th scope='col'>Salary</th>
+               <th scope='col'>Patient Id</th>
                <th scope='col'>Update</th>
                <th scope='col'>Delete</th>
           </tr>
-               {% for data in Patientmodel%}
+               {% for data in Nursemodel%}
                <tr scope='row'>
                <td >
-                 {{data.Patient_Id}}
+                 {{data.Nurse_Id}}
                </td>
                <td >
-                 {{data.Patient_Name}}
+                 {{data.Nurse_Name}}
                </td>
                <td >
                  {{data.Gender}}
@@ -60,36 +58,31 @@
                  {{data.Age}}
                </td>
                <td >
-                 {{data.Blood_Group}}
+                 {{data.Phone_Number}}
                </td>
                <td >
-                 {{data.Address}}
+                 {{data.Joining_date}}
                </td>
                <td >
-                 {{data.Patient_Contact_No}}
+                 {{data.Shift_Days}}
                </td>
                <td >
-                 {{data.Residence_No}}
+                 {{data.Shift_timing}}
                </td>
                <td >
-                 {{data.Email_Id}}
+                 {{data.Position}}
                </td>
                <td >
-                 {{data.Emergency_Number}}
+                 {{data.Salary}}
                </td>
                <td >
-                 {{data.Emergency_Contact_Name}}
+                 {{data.Patient_Id}}
                </td>
-               <td >
-                 {{data.Purpose}}
-               </td>
-               <td >
-                 {{data.Emergency_Patient}}
-               </td>
+
                <td><a style="color:white; background-color:rgb(26,115,232);" class="btn btn-sm btn-info"
-     							href="{%url 'myapp:update_patient' data.Patient_Id%}"><b>Update</b></a></td>
+     							href="{%url 'myapp:update_nurse' data.Nurse_Id%}"><b>Update</b></a></td>
      					<td><a style="color:white; background-color:rgb(217,48,37);" class="btn btn-sm btn-danger"
-     							href="{%url 'myapp:delete_patient' data.Patient_Id %}"><b>Delete</b></a></td>
+     							href="{%url 'myapp:delete_nurse' data.Nurse_Id %}"><b>Delete</b></a></td>
                {%endfor%}
              </tr>
          </table>
