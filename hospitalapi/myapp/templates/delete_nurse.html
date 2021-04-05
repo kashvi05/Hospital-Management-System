@@ -16,14 +16,14 @@
 			<div class="card card-body" style="background-color:rgb(217,48,37); border-radius: 10px;">
 
 
-				<p style="color: white;"><strong>Are you sure you want to permanently remove {{item.Patient_Name}} patient
+				<p style="color: white;"><strong>Are you sure you want to permanently remove {{item.Nurse_Name}} nurse
 						?</strong></p>
 
-				<form action="{% url 'myapp:delete_patient' item.Patient_Id  %}" method="POST">
+				<form action="{% url 'myapp:delete_nurse' item.Nurse_Id  %}" method="POST">
 
 					{% csrf_token %}
 					<a style="color:black; background-color:white; border-radius: 20px;" class="btn btn-warning"
-						href="{% url 'myapp:patient' %}"><b>Cancel</b></a>
+						href="{% url 'myapp:nurse' %}"><b>Cancel</b></a>
 
 					<input style="color:black; background-color:white; border-radius: 20px; font-weight: 700;"
 						class="btn btn-danger" type="submit" name="Yes">

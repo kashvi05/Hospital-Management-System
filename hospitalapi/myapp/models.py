@@ -1,8 +1,51 @@
 from django.db import models
+from django.db.models import CharField
+from django.db.models import IntegerField
+from django.db.models import BooleanField
+from django.db.models import FloatField
+from django.db.models import DateTimeField
 
 class Patientmodel(models.Model):
-    patId=models.IntegerField(primary_key=True)
-    patName=models.CharField(max_length=100)
-    phone=models.CharField(max_length=12)
+    Patient_Id=models.IntegerField(primary_key=True)
+    Patient_Name=models.CharField(max_length=100)
+    Gender=models.CharField(max_length=1)
+    Age=models.IntegerField()
+    Blood_Group=CharField(max_length=2)
+    Address=CharField(max_length=225)
+    Patient_Contact_No=CharField(max_length=10)
+    Residence_No=CharField(max_length=8)
+    Email_Id=CharField(max_length=225)
+    Emergency_Number=CharField(max_length=10)
+    Emergency_Contact_Name=CharField(max_length=300)
+    Purpose=CharField(max_length=300)
+    Emergency_Patient=BooleanField()
     class Meta:
-        db_table='patient'
+        db_table='patient table'
+
+class Doctormodel(models.Model):
+    Doctor_Id=IntegerField(primary_key=True)
+    Doctor_Name=CharField(max_length=255)
+    Age=IntegerField()
+    Speciality=CharField(max_length=255)
+    Email_Id=CharField(max_length=255)
+    Contact_No=CharField(max_length=255)
+    Office_Room_No=IntegerField()
+    Salary=FloatField()
+    Patient_Id=IntegerField()
+    class Meta:
+        db_table='doctor table'
+
+class Nursemodel(models.Model):
+    Nurse_Id=IntegerField(primary_key=True)
+    Nurse_Name=CharField(max_length=300)
+    Gender=CharField(max_length=1)
+    Age=IntegerField()
+    Phone_Number=CharField(max_length=10)
+    Joining_date=DateTimeField()
+    Shift_Days=CharField(max_length=300)
+    Shift_timing=DateTimeField()
+    Position=CharField(max_length=300)
+    Salary=FloatField()
+    Patient_Id=IntegerField()
+    class Meta:
+        db_table='nurse table'
