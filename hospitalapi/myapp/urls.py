@@ -18,4 +18,12 @@ urlpatterns = [
     path('create_nurse/', views.create_nurse, name="create_nurse"),
     path("update_nurse/<int:pk>/", views.update_nurse, name="update_nurse"),
     path("delete_nurse/<int:pk>/", views.delete_nurse, name="delete_nurse"),
+    path('appointment/', views.displayappointment, name="appointment"),
+    path('create_appointment/', views.create_appointment, name="create_appointment"),
+    path("update_appointment/<int:pk>/", views.update_appointment, name="update_appointment"),
+    path("delete_appointment/<int:pk>/", views.delete_appointment, name="delete_appointment"),
+    path('room/', views.displayroom, name="room"),
+    path('create_room/', views.create_room, name="create_room"),
+    path("update_room/<int:pk>/", views.update_room, name="update_room"),
+    path("delete_room/<int:pk>/", views.delete_room, name="delete_room"),
  ]

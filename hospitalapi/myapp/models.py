@@ -4,6 +4,8 @@ from django.db.models import IntegerField
 from django.db.models import BooleanField
 from django.db.models import FloatField
 from django.db.models import DateTimeField
+from django.db.models import DateField
+from django.db.models import TimeField
 
 class Patientmodel(models.Model):
     Patient_Id=models.IntegerField(primary_key=True)
@@ -49,3 +51,24 @@ class Nursemodel(models.Model):
     Patient_Id=IntegerField()
     class Meta:
         db_table='nurse table'
+
+class Appointmentmodel(models.Model):
+    Patient_Id=IntegerField(primary_key=True)
+    Patient_Name=CharField(max_length=255)
+    Appointment_Date=DateTimeField()
+    Time=DateTimeField()
+    Purpose=CharField(max_length=255)
+    Patient_Contact_No=CharField(max_length=10)
+    Doctor_Id=IntegerField()
+    Doctor_Name=CharField(max_length=255)
+    Room_No=IntegerField()
+    class Meta:
+        db_table='appointment table'
+
+class Roommodel(models.Model):
+    Room_No=IntegerField(primary_key=True)
+    Room_type=CharField(max_length=100)
+    Number_of_bed=IntegerField()
+    Availability_status=BooleanField()
+    class Meta:
+        db_table='room table'
