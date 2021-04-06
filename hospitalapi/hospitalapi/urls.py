@@ -25,6 +25,8 @@ urlpatterns = [
     path('show',views.showPatient,name='showPatient'),
     path('showDoctor',views.showDoctor,name='showDoctor'),
     path('showNurse',views.showNurse,name='showNurse'),
+    path('showAppointment',views.showAppointment,name='showAppointment'),
+    path('showRoom',views.showRoom,name='showRoom'),
     path('', include('myapp.urls')),
 
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
