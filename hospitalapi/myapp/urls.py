@@ -26,4 +26,12 @@ urlpatterns = [
     path('create_room/', views.create_room, name="create_room"),
     path("update_room/<int:pk>/", views.update_room, name="update_room"),
     path("delete_room/<int:pk>/", views.delete_room, name="delete_room"),
+    path('bill/', views.displaybill, name="bill"),
+    path('create_bill/', views.create_bill, name="create_bill"),
+    path("update_bill/<int:pk>/", views.update_bill, name="update_bill"),
+    path("delete_bill/<int:pk>/", views.delete_bill, name="delete_bill"),
+    path('blood/', views.displayblood, name="blood"),
+    path('create_blood/', views.create_blood, name="create_blood"),
+    path("update_blood/<str:pk>/", views.update_blood, name="update_blood"),
+    path("delete_blood/<str:pk>/", views.delete_blood, name="delete_blood"),
  ]

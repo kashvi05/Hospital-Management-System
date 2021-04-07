@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Patientmodel,Doctormodel,Nursemodel, Appointmentmodel, Roommodel
+from .models import Patientmodel,Doctormodel,Nursemodel, Appointmentmodel, Roommodel, Billingmodel,BloodBankmodel
 from django import forms
 
 
@@ -26,4 +26,14 @@ class AppointmentForm(ModelForm):
 class RoomForm(ModelForm):
     class Meta:
         model=Roommodel
+        fields='__all__'
+
+class BillingForm(ModelForm):
+    class Meta:
+        model=Billingmodel
+        fields='__all__'
+
+class BloodBankForm(ModelForm):
+    class Meta:
+        model=BloodBankmodel
         fields='__all__'
