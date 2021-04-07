@@ -72,3 +72,24 @@ class Roommodel(models.Model):
     Availability_status=BooleanField()
     class Meta:
         db_table='room table'
+
+class Billingmodel(models.Model):
+    Bill_No=IntegerField(primary_key=True)
+    Bill_Date=DateTimeField()
+    Patient_Id=IntegerField()
+    Patient_Name=CharField(max_length=255)
+    Doctor_Id=IntegerField()
+    Doctors_fees=FloatField()
+    Room_Charges=FloatField()
+    Tests_Charges=FloatField()
+    Tax=FloatField()
+    Total_Amount=FloatField()
+    class Meta:
+        db_table='billing'
+
+class BloodBankmodel(models.Model):
+    Date_issued=DateTimeField()
+    Blood_Group=CharField(max_length=3,primary_key=True)
+    Pints_available=IntegerField()
+    class Meta:
+        db_table='blood bank records'

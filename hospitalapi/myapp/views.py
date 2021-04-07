@@ -1,11 +1,11 @@
-from myapp.serialization import SerializationclassPatient,SerializationclassDoctor,SerializationclassNurse, SerializationclassAppointment, SerializationclassRoom
+from myapp.serialization import SerializationclassPatient,SerializationclassDoctor,SerializationclassNurse, SerializationclassAppointment, SerializationclassRoom, SerializationclassBilling, SerializationclassBlood
 from myapp.models import Patientmodel
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import render, redirect
 import requests
-from .forms import PatientForm, DoctorForm, NurseForm, AppointmentForm, RoomForm
-from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel
+from .forms import PatientForm, DoctorForm, NurseForm, AppointmentForm, RoomForm, BillingForm, BloodBankForm
+from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -46,6 +46,20 @@ def showRoom(request):
         serialize=SerializationclassRoom(results,many=True)
         return Response(serialize.data)
 
+@api_view(['GET'])
+def showBill(request):
+    if request.method=='GET':
+        results=Billingmodel.objects.all()
+        serialize=SerializationclassBilling(results,many=True)
+        return Response(serialize.data)
+
+@api_view(['GET'])
+def showBlood(request):
+    if request.method=='GET':
+        results=BloodBankmodel.objects.all()
+        serialize=SerializationclassBlood(results,many=True)
+        return Response(serialize.data)
+
 def displayHome(request):
     return render(request,'index.html')
 
@@ -74,6 +88,16 @@ def displayroom(request):
     callapi=requests.get('http://127.0.0.1:8000/showRoom')
     results=callapi.json()
     return render(request,'Room.html',{'Roommodel':results})
+
+def displaybill(request):
+    callapi=requests.get('http://127.0.0.1:8000/showBill')
+    results=callapi.json()
+    return render(request,'Bill.html',{'Billingmodel':results})
+
+def displayblood(request):
+    callapi=requests.get('http://127.0.0.1:8000/showBlood')
+    results=callapi.json()
+    return render(request,'Blood.html',{'BloodBankmodel':results})
 
 def create_patient(request):
     inst=Patientmodel()
@@ -142,6 +166,34 @@ def create_room(request):
 
     context={'form':form}
     return render(request,'create_room.html',context)
+
+def create_bill(request):
+    inst=Billingmodel()
+    form=BillingForm(instance=inst)
+    if request.method=='POST':
+        form=BillingForm(request.POST,instance=inst)
+        if form.is_valid():
+            form.save()
+            messages.info(request,"New bill created successfully!!")
+            return redirect('/bill')
+
+
+    context={'form':form}
+    return render(request,'create_bill.html',context)
+
+def create_blood(request):
+    inst=BloodBankmodel()
+    form=BloodBankForm(instance=inst)
+    if request.method=='POST':
+        form=BloodBankForm(request.POST,instance=inst)
+        if form.is_valid():
+            form.save()
+            messages.info(request,"New blood record created successfully!!")
+            return redirect('/blood')
+
+
+    context={'form':form}
+    return render(request,'create_blood.html',context)
 
 def update_patient(request,pk):
     curr_patient=Patientmodel.objects.get(Patient_Id=pk)
@@ -219,6 +271,36 @@ def update_room(request,pk):
     context={'form':form}
     return render(request,'update_room.html',context)
 
+def update_bill(request,pk):
+    curr_bill=Billingmodel.objects.get(Bill_No=pk)
+    name=curr_bill.Bill_No
+    form =BillingForm(initial={'Bill_No':curr_bill.Bill_No})
+    if request.method == 'POST':
+        form =BillingForm(request.POST,instance=curr_bill)
+        if form.is_valid():
+            form.save()
+            messages.error(request, f"{name} updated successfully!!")
+            return redirect('/bill')
+
+
+    context={'form':form}
+    return render(request,'update_bill.html',context)
+
+def update_blood(request,pk):
+    curr_blood=BloodBankmodel.objects.get(Blood_Group=pk)
+    name=curr_blood.Blood_Group
+    form =BloodBankForm(initial={'Blood_Group':curr_blood.Blood_Group})
+    if request.method == 'POST':
+        form =BloodBankForm(request.POST,instance=curr_blood)
+        if form.is_valid():
+            form.save()
+            messages.error(request, f"{name} updated successfully!!")
+            return redirect('/blood')
+
+
+    context={'form':form}
+    return render(request,'update_blood.html',context)
+
 def delete_patient(request,pk):
     curr_patient=Patientmodel.objects.get(Patient_Id=pk)
     name=curr_patient.Patient_Name
@@ -269,3 +351,23 @@ def delete_room(request,pk):
         return redirect('/room')
     context = {'item': curr_room}
     return render(request, 'delete_room.html', context)
+
+def delete_bill(request,pk):
+    curr_bill=Billingmodel.objects.get(Bill_No=pk)
+    name=curr_bill.Bill_No
+    if request.method=="POST":
+        curr_bill.delete()
+        messages.error(request, f"{name} deleted successfully!!")
+        return redirect('/bill')
+    context = {'item': curr_bill}
+    return render(request, 'delete_bill.html', context)
+
+def delete_blood(request,pk):
+    curr_blood=BloodBankmodel.objects.get(Blood_Group=pk)
+    name=curr_blood.Blood_Group
+    if request.method=="POST":
+        curr_blood.delete()
+        messages.error(request, f"{name} deleted successfully!!")
+        return redirect('/blood')
+    context = {'item': curr_blood}
+    return render(request, 'delete_blood.html', context)
