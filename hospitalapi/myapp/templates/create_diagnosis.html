@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+
+<html lang="en">
+
+ <style>
+
+
+   label {
+   font-size: 18px;
+   color: black}
+
+   .jumbotron {
+    background-color: #f3f3f3;
+    margin-left: auto;
+    margin-right: auto;
+    width:60%;
+  }
+
+  </style>
+    <body>
+
+
+
+    <div class="container">
+          <div class="jumbotron">
+              <div class="container">
+             <h1 class="display-4">Create a new patient diagnosis record!</h1>
+
+                     <hr class="my-4">
+
+                     <br>
+                     <br>
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+
+                <br>
+                <div class="text-center">
+                  <button style="color:white;   border-radius: 25px; padding-bottom:35px"
+                  class="btn btn-success btn-lg"  name="submit" type="submit"><b>Create</b></button></div>
+            </form>
+          </div>
+        </div>
+    </div>
+    <br><br><br><br>
+    <br><br><br>
+
+</body>
+
+
+</html>
+    {% endblock %}

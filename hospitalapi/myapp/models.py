@@ -93,3 +93,14 @@ class BloodBankmodel(models.Model):
     Pints_available=IntegerField()
     class Meta:
         db_table='blood bank records'
+
+class Diagnosismodel(models.Model):
+    Diagnosis_ID=IntegerField(primary_key=True)
+    Date=DateTimeField()
+    Diagnosis_details=CharField(max_length=300)
+    Remarks=CharField(max_length=300)
+    Prescription=CharField(max_length=300)
+    Insurance_Policy_No=CharField(max_length=300)
+    Patient_Id=IntegerField()
+    class Meta:
+        db_table='patient diagnosis'
