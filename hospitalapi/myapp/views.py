@@ -1,11 +1,11 @@
-from myapp.serialization import SerializationclassPatient,SerializationclassDoctor,SerializationclassNurse, SerializationclassAppointment, SerializationclassRoom, SerializationclassBilling, SerializationclassBlood
+from myapp.serialization import SerializationclassPatient,SerializationclassDoctor,SerializationclassNurse, SerializationclassAppointment, SerializationclassRoom, SerializationclassBilling, SerializationclassBlood,SerializationclassDiagnosis
 from myapp.models import Patientmodel
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import render, redirect
 import requests
-from .forms import PatientForm, DoctorForm, NurseForm, AppointmentForm, RoomForm, BillingForm, BloodBankForm
-from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel
+from .forms import PatientForm, DoctorForm, NurseForm, AppointmentForm, RoomForm, BillingForm, BloodBankForm,DiagnosisForm
+from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel, Diagnosismodel
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -60,6 +60,13 @@ def showBlood(request):
         serialize=SerializationclassBlood(results,many=True)
         return Response(serialize.data)
 
+@api_view(['GET'])
+def showDiagnosis(request):
+    if request.method=='GET':
+        results=Diagnosismodel.objects.all()
+        serialize=SerializationclassDiagnosis(results,many=True)
+        return Response(serialize.data)
+
 def displayHome(request):
     return render(request,'index.html')
 
@@ -98,6 +105,11 @@ def displayblood(request):
     callapi=requests.get('http://127.0.0.1:8000/showBlood')
     results=callapi.json()
     return render(request,'Blood.html',{'BloodBankmodel':results})
+
+def displaydiagnosis(request):
+    callapi=requests.get('http://127.0.0.1:8000/showDiagnosis')
+    results=callapi.json()
+    return render(request,'Diagnosis.html',{'Diagnosismodel':results})
 
 def create_patient(request):
     inst=Patientmodel()
@@ -194,6 +206,20 @@ def create_blood(request):
 
     context={'form':form}
     return render(request,'create_blood.html',context)
+
+def create_diagnosis(request):
+    inst=Diagnosismodel()
+    form=DiagnosisForm(instance=inst)
+    if request.method=='POST':
+        form=DiagnosisForm(request.POST,instance=inst)
+        if form.is_valid():
+            form.save()
+            messages.info(request,"New diagnosis record created successfully!!")
+            return redirect('/diagnosis')
+
+
+    context={'form':form}
+    return render(request,'create_diagnosis.html',context)
 
 def update_patient(request,pk):
     curr_patient=Patientmodel.objects.get(Patient_Id=pk)
@@ -301,6 +327,21 @@ def update_blood(request,pk):
     context={'form':form}
     return render(request,'update_blood.html',context)
 
+def update_diagnosis(request,pk):
+    curr_rec=Diagnosismodel.objects.get(Diagnosis_ID=pk)
+    name=curr_rec.Diagnosis_ID
+    form =BloodBankForm(initial={'Diagnosis_ID':name})
+    if request.method == 'POST':
+        form =DiagnosisForm(request.POST,instance=curr_rec)
+        if form.is_valid():
+            form.save()
+            messages.error(request, f"{name} updated successfully!!")
+            return redirect('/diagnosis')
+
+
+    context={'form':form}
+    return render(request,'update_diagnosis.html',context)
+
 def delete_patient(request,pk):
     curr_patient=Patientmodel.objects.get(Patient_Id=pk)
     name=curr_patient.Patient_Name
@@ -371,3 +412,23 @@ def delete_blood(request,pk):
         return redirect('/blood')
     context = {'item': curr_blood}
     return render(request, 'delete_blood.html', context)
+
+def delete_blood(request,pk):
+    curr_blood=BloodBankmodel.objects.get(Blood_Group=pk)
+    name=curr_blood.Blood_Group
+    if request.method=="POST":
+        curr_blood.delete()
+        messages.error(request, f"{name} deleted successfully!!")
+        return redirect('/blood')
+    context = {'item': curr_blood}
+    return render(request, 'delete_blood.html', context)
+
+def delete_diagnosis(request,pk):
+    curr_rec=Diagnosismodel.objects.get(Diagnosis_ID=pk)
+    name=curr_rec.Diagnosis_ID
+    if request.method=="POST":
+        curr_rec.delete()
+        messages.error(request, f"{name} deleted successfully!!")
+        return redirect('/diagnosis')
+    context = {'item': curr_rec}
+    return render(request, 'delete_diagnosis.html', context)

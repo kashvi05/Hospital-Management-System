@@ -34,4 +34,8 @@ urlpatterns = [
     path('create_blood/', views.create_blood, name="create_blood"),
     path("update_blood/<str:pk>/", views.update_blood, name="update_blood"),
     path("delete_blood/<str:pk>/", views.delete_blood, name="delete_blood"),
+    path('diagnosis/', views.displaydiagnosis, name="diagnosis"),
+    path('create_diagnosis/', views.create_diagnosis, name="create_diagnosis"),
+    path("update_diagnosis/<int:pk>/", views.update_diagnosis, name="update_diagnosis"),
+    path("delete_diagnosis/<int:pk>/", views.delete_diagnosis, name="delete_diagnosis"),
  ]

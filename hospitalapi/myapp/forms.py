@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Patientmodel,Doctormodel,Nursemodel, Appointmentmodel, Roommodel, Billingmodel,BloodBankmodel
+from .models import Patientmodel,Doctormodel,Nursemodel, Appointmentmodel, Roommodel, Billingmodel,BloodBankmodel,Diagnosismodel
 from django import forms
 
 
@@ -36,4 +36,9 @@ class BillingForm(ModelForm):
 class BloodBankForm(ModelForm):
     class Meta:
         model=BloodBankmodel
+        fields='__all__'
+
+class DiagnosisForm(ModelForm):
+    class Meta:
+        model=Diagnosismodel
         fields='__all__'
