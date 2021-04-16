@@ -1,15 +1,14 @@
-from myapp.serialization import SerializationclassPatient,SerializationclassDoctor,SerializationclassNurse, SerializationclassAppointment, SerializationclassRoom, SerializationclassBilling, SerializationclassBlood,SerializationclassDiagnosis
+from myapp.serialization import SerializationclassPatient,SerializationclassDoctor,SerializationclassNurse, SerializationclassAppointment, SerializationclassRoom, SerializationclassBilling, SerializationclassBlood,SerializationclassDiagnosis, SerializationclassVisitor, SerializationclassEmergency
 from myapp.models import Patientmodel
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import render, redirect
 import requests
-from .forms import PatientForm, DoctorForm, NurseForm, AppointmentForm, RoomForm, BillingForm, BloodBankForm,DiagnosisForm
-from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel, Diagnosismodel
+from .forms import PatientForm, DoctorForm, NurseForm, AppointmentForm, RoomForm, BillingForm, BloodBankForm,DiagnosisForm, VisitorForm, EmergencyForm
+from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel, Diagnosismodel, Visitormodel, Emergencymodel
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-
 
 @api_view(['GET'])
 def showPatient(request):
@@ -67,6 +66,20 @@ def showDiagnosis(request):
         serialize=SerializationclassDiagnosis(results,many=True)
         return Response(serialize.data)
 
+@api_view(['GET'])
+def showVisitor(request):
+    if request.method=='GET':
+        results=Visitormodel.objects.all()
+        serialize=SerializationclassVisitor(results,many=True)
+        return Response(serialize.data)
+
+@api_view(['GET'])
+def showEmergency(request):
+    if request.method=='GET':
+        results=Emergencymodel.objects.all()
+        serialize=SerializationclassEmergency(results,many=True)
+        return Response(serialize.data)
+
 def displayHome(request):
     return render(request,'index.html')
 
@@ -111,6 +124,16 @@ def displaydiagnosis(request):
     results=callapi.json()
     return render(request,'Diagnosis.html',{'Diagnosismodel':results})
 
+def displayvisitor(request):
+    callapi=requests.get('http://127.0.0.1:8000/showVisitor')
+    results=callapi.json()
+    return render(request,'Visitor.html',{'Visitormodel':results})
+
+def displayemergency(request):
+    callapi=requests.get('http://127.0.0.1:8000/showEmergency')
+    results=callapi.json()
+    return render(request,'Emergency.html',{'Emergencymodel':results})
+
 def create_patient(request):
     inst=Patientmodel()
     form=PatientForm(instance=inst)
@@ -120,6 +143,9 @@ def create_patient(request):
             form.save()
             messages.info(request,"New patient created successfully!!")
             return redirect('/patient')
+
+    context={'form':form}
+    return render(request,'create_patient.html',context)
 
 def create_doctor(request):
     inst=Doctormodel()
@@ -221,10 +247,38 @@ def create_diagnosis(request):
     context={'form':form}
     return render(request,'create_diagnosis.html',context)
 
+def create_visitor(request):
+        inst=Visitormodel()
+        form=VisitorForm(instance=inst)
+        if request.method=='POST':
+            form=VisitorForm(request.POST,instance=inst)
+            if form.is_valid():
+                form.save()
+                messages.info(request,"New visitor record created successfully!!")
+                return redirect('/visitor')
+
+
+        context={'form':form}
+        return render(request,'create_visitor.html',context)
+
+def create_emergency(request):
+        inst=Emergencymodel()
+        form=EmergencyForm(instance=inst)
+        if request.method=='POST':
+            form=EmergencyForm(request.POST,instance=inst)
+            if form.is_valid():
+                form.save()
+                messages.info(request,"New emergency room created successfully!!")
+                return redirect('/emergency')
+
+
+        context={'form':form}
+        return render(request,'create_emergency.html',context)
+
 def update_patient(request,pk):
     curr_patient=Patientmodel.objects.get(Patient_Id=pk)
     name=curr_patient.Patient_Name
-    form =PatientForm(initial={'Patient_Id':curr_patient.Patient_Id,'Patient_Name':name,'Patient Contact No':curr_patient.Patient_Contact_No})
+    form =PatientForm(initial={'Patient_Id':curr_patient.Patient_Id,'Patient_Name':name,'Gender':curr_patient.Gender,'Age':curr_patient.Age,'Blood_Group':curr_patient.Blood_Group,'Address':curr_patient.Address,'Patient_Contact_No':curr_patient.Patient_Contact_No,'Residence_No':curr_patient.Residence_No,'Email_Id':curr_patient.Email_Id,'Emergency_Number':curr_patient.Emergency_Number,'Emergency_Contact_Name':curr_patient.Emergency_Contact_Name,'Purpose':curr_patient.Purpose,'Emergency_Patient':curr_patient.Emergency_Patient})
     if request.method == 'POST':
         form = PatientForm(request.POST,instance=curr_patient)
         if form.is_valid():
@@ -240,7 +294,7 @@ def update_patient(request,pk):
 def update_doctor(request,pk):
     curr_doctor=Doctormodel.objects.get(Doctor_Id=pk)
     name=curr_doctor.Doctor_Name
-    form =DoctorForm(initial={'Doctor Id':curr_doctor.Doctor_Id,'Doctor Name':name,'Contact No.':curr_doctor.Contact_No})
+    form =DoctorForm(initial={'Doctor_Id':curr_doctor.Doctor_Id,'Doctor_Name':name,'Age':curr_doctor.Age,'Speciality':curr_doctor.Speciality,'Email_Id':curr_doctor.Email_Id,'Contact_No':curr_doctor.Contact_No,'Office_Room_No':curr_doctor.Office_Room_No,'Salary':curr_doctor.Salary,'Patient_Id':curr_doctor.Patient_Id})
     if request.method == 'POST':
         form = DoctorForm(request.POST,instance=curr_doctor)
         if form.is_valid():
@@ -255,7 +309,7 @@ def update_doctor(request,pk):
 def update_nurse(request,pk):
     curr_nurse=Nursemodel.objects.get(Nurse_Id=pk)
     name=curr_nurse.Nurse_Name
-    form =NurseForm(initial={'Nurse Id':curr_nurse.Nurse_Id,'Nurse Name':name,'Contact No.':curr_nurse.Phone_Number})
+    form =NurseForm(initial={'Nurse_Id':curr_nurse.Nurse_Id,'Nurse_Name':name,'Gender':curr_nurse.Gender,'Age':curr_nurse.Age,'Phone_Number':curr_nurse.Phone_Number,'Joining_date':curr_nurse.Joining_date,'Shift_Days':curr_nurse.Shift_Days,'Shift_timing':curr_nurse.Shift_timing,'Position':curr_nurse.Position,'Salary':curr_nurse.Salary,'Patient_Id':curr_nurse.Patient_Id})
     if request.method == 'POST':
         form = NurseForm(request.POST,instance=curr_nurse)
         if form.is_valid():
@@ -270,7 +324,7 @@ def update_nurse(request,pk):
 def update_appointment(request,pk):
     curr_app=Appointmentmodel.objects.get(Patient_Id=pk)
     name=curr_app.Patient_Name
-    form =AppointmentForm(initial={'Patient Id':curr_app.Patient_Id,'Patient Name':name,'Contact No.':curr_app.Patient_Contact_No})
+    form =AppointmentForm(initial={'Patient_Id':curr_app.Patient_Id,'Patient_Name':name,'Appointment_Date':curr_app.Appointment_Date,'Time':curr_app.Time,'Purpose':curr_app.Purpose,'Patient_Contact_No':curr_app.Patient_Contact_No,'Doctor_Id':curr_app.Doctor_Id,'Doctor_Name':curr_app.Doctor_Name,'Room_No':curr_app.Room_No})
     if request.method == 'POST':
         form = AppointmentForm(request.POST,instance=curr_app)
         if form.is_valid():
@@ -285,7 +339,7 @@ def update_appointment(request,pk):
 def update_room(request,pk):
     curr_room=Roommodel.objects.get(Room_No=pk)
     name=curr_room.Room_type
-    form =RoomForm(initial={'Room No':curr_room.Room_No,'Room type':name,'Number of beds':curr_room.Number_of_bed})
+    form =RoomForm(initial={'Room_No':curr_room.Room_No,'Room_type':name,'Number_of_bed':curr_room.Number_of_bed,'Availability_status':curr_room.Availability_status})
     if request.method == 'POST':
         form =RoomForm(request.POST,instance=curr_room)
         if form.is_valid():
@@ -300,7 +354,7 @@ def update_room(request,pk):
 def update_bill(request,pk):
     curr_bill=Billingmodel.objects.get(Bill_No=pk)
     name=curr_bill.Bill_No
-    form =BillingForm(initial={'Bill_No':curr_bill.Bill_No})
+    form =BillingForm(initial={'Bill_No':curr_bill.Bill_No,'Bill_Date':curr_bill.Bill_Date,'Patient_Id':curr_bill.Patient_Id,'Patient_Name':curr_bill.Patient_Id,'Patient_Name':curr_bill.Patient_Name,'Doctor_Id':curr_bill.Doctor_Id,'Doctors_fees':curr_bill.Doctors_fees,'Room_Charges':curr_bill.Room_Charges,'Tests_Charges':curr_bill.Tests_Charges,'Tax':curr_bill.Tax,'Total_Amount':curr_bill.Total_Amount})
     if request.method == 'POST':
         form =BillingForm(request.POST,instance=curr_bill)
         if form.is_valid():
@@ -315,7 +369,7 @@ def update_bill(request,pk):
 def update_blood(request,pk):
     curr_blood=BloodBankmodel.objects.get(Blood_Group=pk)
     name=curr_blood.Blood_Group
-    form =BloodBankForm(initial={'Blood_Group':curr_blood.Blood_Group})
+    form =BloodBankForm(initial={'Date_issued':curr_blood.Date_issued,'Blood_Group':curr_blood.Blood_Group,'Pints_available':curr_blood.Pints_available})
     if request.method == 'POST':
         form =BloodBankForm(request.POST,instance=curr_blood)
         if form.is_valid():
@@ -330,7 +384,7 @@ def update_blood(request,pk):
 def update_diagnosis(request,pk):
     curr_rec=Diagnosismodel.objects.get(Diagnosis_ID=pk)
     name=curr_rec.Diagnosis_ID
-    form =BloodBankForm(initial={'Diagnosis_ID':name})
+    form =DiagnosisForm(initial={'Diagnosis_ID':name,'Date':curr_rec.Date,'Diagnosis_details':curr_rec.Diagnosis_details,'Remarks':curr_rec.Remarks,'Prescription':curr_rec.Prescription,'Insurance_Policy_No':curr_rec.Insurance_Policy_No,'Patient_Id':curr_rec.Patient_Id})
     if request.method == 'POST':
         form =DiagnosisForm(request.POST,instance=curr_rec)
         if form.is_valid():
@@ -341,6 +395,36 @@ def update_diagnosis(request,pk):
 
     context={'form':form}
     return render(request,'update_diagnosis.html',context)
+
+def update_visitor(request,pk):
+    curr_rec=Visitormodel.objects.get(Visitor_Id=pk)
+    name=curr_rec.Visitor_Id
+    form =VisitorForm(initial={'Visitor_Id':name,'Visitor_Name':curr_rec.Visitor_Name,'Patient_Id':curr_rec.Patient_Name,'Time':curr_rec.Time,'Room_No':curr_rec.Room_No})
+    if request.method == 'POST':
+        form =VisitorForm(request.POST,instance=curr_rec)
+        if form.is_valid():
+            form.save()
+            messages.error(request, f"{name} updated successfully!!")
+            return redirect('/visitor')
+
+
+    context={'form':form}
+    return render(request,'update_visitor.html',context)
+
+def update_emergency(request,pk):
+    curr_rec=Emergencymodel.objects.get(Room_No=pk)
+    name=curr_rec.Room_No
+    form =EmergencyForm(initial={'Patient_Name':curr_rec.Patient_Name,'Room_No':name,'Contact_Number':curr_rec.Contact_Number})
+    if request.method == 'POST':
+        form =EmergencyForm(request.POST,instance=curr_rec)
+        if form.is_valid():
+            form.save()
+            messages.error(request, f"{name} updated successfully!!")
+            return redirect('/emergency')
+
+
+    context={'form':form}
+    return render(request,'update_emergency.html',context)
 
 def delete_patient(request,pk):
     curr_patient=Patientmodel.objects.get(Patient_Id=pk)
@@ -432,3 +516,23 @@ def delete_diagnosis(request,pk):
         return redirect('/diagnosis')
     context = {'item': curr_rec}
     return render(request, 'delete_diagnosis.html', context)
+
+def delete_visitor(request,pk):
+    curr_rec=Visitormodel.objects.get(Visitor_Id=pk)
+    name=curr_rec.Visitor_Id
+    if request.method=="POST":
+        curr_rec.delete()
+        messages.error(request, f"{name} deleted successfully!!")
+        return redirect('/visitor')
+    context = {'item': curr_rec}
+    return render(request, 'delete_visitor.html', context)
+
+def delete_emergency(request,pk):
+    curr_rec=Emergencymodel.objects.get(Room_No=pk)
+    name=curr_rec.Room_No
+    if request.method=="POST":
+        curr_rec.delete()
+        messages.error(request, f"{name} deleted successfully!!")
+        return redirect('/emergency')
+    context = {'item': curr_rec}
+    return render(request, 'delete_emergency.html', context)
