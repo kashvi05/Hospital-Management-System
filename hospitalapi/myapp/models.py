@@ -45,7 +45,7 @@ class Nursemodel(models.Model):
     Phone_Number=CharField(max_length=10)
     Joining_date=DateField()
     Shift_Days=CharField(max_length=300)
-    Shift_timing=CharField(max_length=30)
+    Shift_timing=CharField(max_length=300)
     Position=CharField(max_length=300)
     Salary=FloatField()
     Patient_Id=IntegerField()
@@ -71,7 +71,7 @@ class Roommodel(models.Model):
     Number_of_bed=IntegerField()
     Availability_status=BooleanField()
     class Meta:
-        db_table='room table'
+        db_table='room_table'
 
 class Billingmodel(models.Model):
     Bill_No=IntegerField(primary_key=True)
@@ -103,7 +103,7 @@ class Diagnosismodel(models.Model):
     Insurance_Policy_No=CharField(max_length=300)
     Patient_Id=IntegerField()
     class Meta:
-        db_table='patient diagnosis'
+        db_table='patient_diagnosis'
 
 class Visitormodel(models.Model):
      Visitor_Id=IntegerField(primary_key=True)
@@ -113,7 +113,7 @@ class Visitormodel(models.Model):
      Time=CharField(max_length=20)
      Room_No=IntegerField()
      class Meta:
-         db_table='visitors table'
+         db_table='visitors_table'
 
 class Emergencymodel(models.Model):
     Patient_Name=CharField(max_length=300)
