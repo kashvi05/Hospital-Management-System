@@ -38,4 +38,13 @@ urlpatterns = [
     path('create_diagnosis/', views.create_diagnosis, name="create_diagnosis"),
     path("update_diagnosis/<int:pk>/", views.update_diagnosis, name="update_diagnosis"),
     path("delete_diagnosis/<int:pk>/", views.delete_diagnosis, name="delete_diagnosis"),
- ]
+    path('visitor/', views.displayvisitor, name="visitor"),
+    path('create_visitor/', views.create_visitor, name="create_visitor"),
+    path("update_visitor/<int:pk>/", views.update_visitor, name="update_visitor"),
+    path("delete_visitor/<int:pk>/", views.delete_visitor, name="delete_visitor"),
+    path('emergency/', views.displayemergency, name="emergency"),
+    path('create_emergency/', views.create_emergency, name="create_emergency"),
+    path("update_emergency/<int:pk>/", views.update_emergency, name="update_emergency"),
+    path("delete_emergency/<int:pk>/", views.delete_emergency, name="delete_emergency"),
+
+]
