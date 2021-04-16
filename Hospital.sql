@@ -8,10 +8,10 @@ CREATE TABLE `Patient_Table` (
 	`Age` INT NOT NULL,
 	`Blood_Group` varchar(3) NOT NULL,
 	`Address` varchar(255) NOT NULL,
-	`Patient_Contact_No` INT NOT NULL,
-	`Residence_No` INT NOT NULL,
+	`Patient_Contact_No` varchar(10) NOT NULL,
+	`Residence_No` varchar(8) NOT NULL,
 	`Email_ID` varchar(255) NOT NULL,
-	`Emergency_Number` INT NOT NULL,
+	`Emergency_Number` varchar(10) NOT NULL,
 	`Emergency_Contact_Name` varchar(300) NOT NULL,
 	`Purpose` varchar(300) NOT NULL,
 	`Emergency_Patient` BOOLEAN NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE `Doctor_Table` (
 	`Age` INT NOT NULL,
 	`Speciality` varchar(255) NOT NULL,
 	`Email_id` varchar(255) NOT NULL,
-	`Contact_No` INT NOT NULL,
+	`Contact_No` varchar(10) NOT NULL,
 	`Office_Room_No` INT NOT NULL,
 	`Salary` FLOAT NOT NULL,
 	`Patient_Id` INT NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `Nurse_Table` (
 	`Nurse_Name` varchar(300) NOT NULL,
 	`Gender` varchar(1) NOT NULL,
 	`Age` INT NOT NULL,
-	`Phone_Number` INT NOT NULL,
+	`Phone_Number` varchar(10) NOT NULL,
 	`Joining_Date` date NOT NULL,
 	`Shift_Days` varchar(300) NOT NULL,
 	`Shift_timing` TIMESTAMP NOT NULL,
@@ -113,6 +113,8 @@ CREATE TABLE `Emergency_Room_Log` (
 	`Room_No` INT NOT NULL,
 	`Contact_Number` INT NOT NULL
 );
+create table follow_up ( Patient_Id int,Patient_Name varchar(255),follow_up boolean,follow_up_date date, foreign key (Patient_Id) references Patient_Table,
+                        foreign key (Patient_Name) references Patient_Name);
 
 ALTER TABLE `Doctor_Table` ADD CONSTRAINT `Doctor_Table_fk0` FOREIGN KEY (`Patient_Id`) REFERENCES `Patient_Table`(`Patient_Id`);
 
@@ -135,3 +137,40 @@ ALTER TABLE `Visitor's_Table` ADD CONSTRAINT `Visitor's_Table_fk0` FOREIGN KEY (
 ALTER TABLE `Visitor's_Table` ADD CONSTRAINT `Visitor's_Table_fk2` FOREIGN KEY (`Room_No`) REFERENCES `Room_Table`(`Room_No`);
 
 ALTER TABLE `Emergency_Room_Log` ADD CONSTRAINT `Emergency_Room_Log_fk0` FOREIGN KEY (`Room_No`) REFERENCES `Room_Table`(`Room_No`);
+
+#Details of pints available as per given blood group
+drop procedure if exists no_of_blood_pints;
+delimiter $$
+create procedure no_of_blood_pints(bg varchar(3))
+begin 
+	select * from blood_bank_records where blood_group = bg;
+end $$
+delimiter ;
+call no_of_blood_pints('A+');
+insert into blood_bank_records values('2021-04-12','A+',12);
+
+#Displays list of appointments on a given date
+drop procedure if exists appointment_date;
+delimiter $$
+create procedure appointment_date(d date)
+begin
+	select * from appointment_table where Appointment_Date = d;
+end $$
+delimiter ;
+call appointment_date('2021-04-12');
+
+#Procedure to add folloup details 
+drop procedure if exists add_follow_up;
+delimiter $$
+create procedure add_follow_up(P_id int, ans boolean, f_date date)
+begin 
+	  if ans=1
+       then
+			update appointment_table set follow_up='Yes', follow_up_date=f_date where P_id = id;
+	  else 
+			update appointment_table set follow_up='No', follow_up_date='NULL' where P_id = id;
+            
+	end if; 
+end $$
+delimiter ;
+
