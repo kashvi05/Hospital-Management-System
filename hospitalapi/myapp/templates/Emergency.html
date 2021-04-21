@@ -29,6 +29,7 @@
 
          <table class='table table-striped table-hover'>
              <tr>
+               <th scope='col'>Patient_Id</th>
                <th scope='col'>Patient_Name</th>
                <th scope='col'>Room_No</th>
                <th scope='col'>Contact_Number</th>
@@ -37,6 +38,9 @@
           </tr>
                {% for data in Emergencymodel%}
                <tr scope='row'>
+                 <td >
+                   {{data.Patient_Id}}
+                 </td>
                <td >
                  {{data.Patient_Name}}
                </td>
@@ -47,9 +51,9 @@
                  {{data.Contact_Number}}
                </td>
                <td><a style="color:white; background-color:rgb(26,115,232);" class="btn btn-sm btn-info"
-     							href="{%url 'myapp:update_emergency' data.Room_No%}"><b>Update</b></a></td>
+     							href="{%url 'myapp:update_emergency' data.Patient_Id%}"><b>Update</b></a></td>
      					<td><a style="color:white; background-color:rgb(217,48,37);" class="btn btn-sm btn-danger"
-     							href="{%url 'myapp:delete_emergency' data.Room_No %}"><b>Delete</b></a></td>
+     							href="{%url 'myapp:delete_emergency' data.Patient_Id %}"><b>Delete</b></a></td>
                {%endfor%}
              </tr>
          </table>

@@ -32,8 +32,8 @@ urlpatterns = [
     path("delete_bill/<int:pk>/", views.delete_bill, name="delete_bill"),
     path('blood/', views.displayblood, name="blood"),
     path('create_blood/', views.create_blood, name="create_blood"),
-    path("update_blood/<str:pk>/", views.update_blood, name="update_blood"),
-    path("delete_blood/<str:pk>/", views.delete_blood, name="delete_blood"),
+    path("update_blood/<int:pk>/", views.update_blood, name="update_blood"),
+    path("delete_blood/<int:pk>/", views.delete_blood, name="delete_blood"),
     path('diagnosis/', views.displaydiagnosis, name="diagnosis"),
     path('create_diagnosis/', views.create_diagnosis, name="create_diagnosis"),
     path("update_diagnosis/<int:pk>/", views.update_diagnosis, name="update_diagnosis"),
@@ -46,5 +46,11 @@ urlpatterns = [
     path('create_emergency/', views.create_emergency, name="create_emergency"),
     path("update_emergency/<int:pk>/", views.update_emergency, name="update_emergency"),
     path("delete_emergency/<int:pk>/", views.delete_emergency, name="delete_emergency"),
-
+    path('procedure/', views.showprocedure1, name="procedure"),
+    path('procedure2/', views.showprocedure2, name="procedure2"),
+    path('procedure3/', views.showprocedure3, name="procedure3"),
+    path('procedure4/', views.showprocedure4, name="procedure4"),
+    path('procedure5/', views.showprocedure5, name="procedure5"),
+    path('procedure6/', views.showprocedure6, name="procedure6"),
+    path('function/', views.showfunction, name="function"),
 ]

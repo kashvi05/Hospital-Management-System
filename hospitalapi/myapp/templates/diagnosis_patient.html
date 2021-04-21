@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{%extends 'index.html' %}
+{%load static%}
+{%block content%}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Hospital Management System!</title>
+  </head>
+
+  <body>
+      <center>
+         <h1>Patient Diagnosis details</h1>
+         <h3>Calling procedure diagnosis_patient()</h3>
+         <hr>
+          <p></p>
+        <div class="container">
+
+         <table class='table table-striped table-hover'>
+             <tr>
+               <th scope='col'>Patient Id</th>
+               <th scope='col'>Patient Name</th>
+                <th scope='col'>Diagnosis Details</th>
+               <th scope='col'>Purpose</th>
+               <th scope='col'>Remarks</th>
+               <th scope='col'>Prescription</th>
+
+          </tr>
+               {% for data in diagnosis_patientmodel%}
+               <tr scope='row'>
+               <td >
+                 {{data.0}}
+               </td>
+               <td >
+                 {{data.1}}
+               </td>
+               <td >
+                 {{data.2}}
+               </td>
+               <td >
+                 {{data.3}}
+               </td>
+               <td >
+                 {{data.4}}
+               </td>
+               <td >
+                 {{data.5}}
+               </td>
+               <td >
+                 {{data.6}}
+               </td>
+            </tr>
+              {%endfor%}
+         </table>
+
+  </div>
+
+      </center>
+  </body>
+
+</html>
+  {% endblock %}

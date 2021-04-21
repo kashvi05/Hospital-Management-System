@@ -3,9 +3,10 @@ from myapp.models import Patientmodel
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import render, redirect
+from django.db import connection
 import requests
 from .forms import PatientForm, DoctorForm, NurseForm, AppointmentForm, RoomForm, BillingForm, BloodBankForm,DiagnosisForm, VisitorForm, EmergencyForm
-from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel, Diagnosismodel, Visitormodel, Emergencymodel
+from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel, Diagnosismodel, Visitormodel, Emergencymodel, diagnosis_patientmodel,final_amount,nurse_doctor,patient_doctor,room_filter,summation
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -367,9 +368,9 @@ def update_bill(request,pk):
     return render(request,'update_bill.html',context)
 
 def update_blood(request,pk):
-    curr_blood=BloodBankmodel.objects.get(Blood_Group=pk)
+    curr_blood=BloodBankmodel.objects.get(Serial_No=pk)
     name=curr_blood.Blood_Group
-    form =BloodBankForm(initial={'Date_issued':curr_blood.Date_issued,'Blood_Group':curr_blood.Blood_Group,'Pints_available':curr_blood.Pints_available})
+    form =BloodBankForm(initial={'Serial_No':curr_blood.Serial_No,'Date_issued':curr_blood.Date_issued,'Blood_Group':curr_blood.Blood_Group,'Pints_donated':curr_blood.Pints_donated})
     if request.method == 'POST':
         form =BloodBankForm(request.POST,instance=curr_blood)
         if form.is_valid():
@@ -412,9 +413,9 @@ def update_visitor(request,pk):
     return render(request,'update_visitor.html',context)
 
 def update_emergency(request,pk):
-    curr_rec=Emergencymodel.objects.get(Room_No=pk)
-    name=curr_rec.Room_No
-    form =EmergencyForm(initial={'Patient_Name':curr_rec.Patient_Name,'Room_No':name,'Contact_Number':curr_rec.Contact_Number})
+    curr_rec=Emergencymodel.objects.get(Patient_Id=pk)
+    name=curr_rec.Patient_Id
+    form =EmergencyForm(initial={'Patient_Id':name,'Patient_Name':curr_rec.Patient_Name,'Room_No':curr_rec.Room_No,'Contact_Number':curr_rec.Contact_Number})
     if request.method == 'POST':
         form =EmergencyForm(request.POST,instance=curr_rec)
         if form.is_valid():
@@ -488,8 +489,8 @@ def delete_bill(request,pk):
     return render(request, 'delete_bill.html', context)
 
 def delete_blood(request,pk):
-    curr_blood=BloodBankmodel.objects.get(Blood_Group=pk)
-    name=curr_blood.Blood_Group
+    curr_blood=BloodBankmodel.objects.get(Serial_No=pk)
+    name=curr_blood.Serial_No
     if request.method=="POST":
         curr_blood.delete()
         messages.error(request, f"{name} deleted successfully!!")
@@ -497,15 +498,6 @@ def delete_blood(request,pk):
     context = {'item': curr_blood}
     return render(request, 'delete_blood.html', context)
 
-def delete_blood(request,pk):
-    curr_blood=BloodBankmodel.objects.get(Blood_Group=pk)
-    name=curr_blood.Blood_Group
-    if request.method=="POST":
-        curr_blood.delete()
-        messages.error(request, f"{name} deleted successfully!!")
-        return redirect('/blood')
-    context = {'item': curr_blood}
-    return render(request, 'delete_blood.html', context)
 
 def delete_diagnosis(request,pk):
     curr_rec=Diagnosismodel.objects.get(Diagnosis_ID=pk)
@@ -528,7 +520,7 @@ def delete_visitor(request,pk):
     return render(request, 'delete_visitor.html', context)
 
 def delete_emergency(request,pk):
-    curr_rec=Emergencymodel.objects.get(Room_No=pk)
+    curr_rec=Emergencymodel.objects.get(Patient_Id=pk)
     name=curr_rec.Room_No
     if request.method=="POST":
         curr_rec.delete()
@@ -536,3 +528,47 @@ def delete_emergency(request,pk):
         return redirect('/emergency')
     context = {'item': curr_rec}
     return render(request, 'delete_emergency.html', context)
+
+def showprocedure1(request):
+    cursor=connection.cursor()
+    cursor.execute("call diagnosis_patient()")
+    results=cursor.fetchall()
+    return render(request,'diagnosis_patient.html',{'diagnosis_patientmodel':results})
+
+def showprocedure2(request):
+    cursor=connection.cursor()
+    cursor.execute("call final_amount()")
+    results=cursor.fetchall()
+    return render(request,'final_amount.html',{'final_amount':results})
+
+
+def showprocedure3(request):
+    var = request.POST.get('pat_id')
+    cursor=connection.cursor()
+    cursor.execute("call nurse_doctor(3)")
+    results=cursor.fetchall()
+    return render(request,'nurse_doctor.html',{'nurse_doctor':results})
+
+def showprocedure4(request):
+    cursor=connection.cursor()
+    cursor.execute("call patient_doctor(7)")
+    results=cursor.fetchall()
+    return render(request,'patient_doctor.html',{'patient_doctor':results})
+
+def showprocedure5(request):
+    cursor=connection.cursor()
+    cursor.execute("call Blood_Group('AB-')")
+    results=cursor.fetchall()
+    return render(request,'Blood_Group.html',{'Blood_Group':results})
+
+def showprocedure6(request):
+    cursor=connection.cursor()
+    cursor.execute("call room_filter('Premium',True)")
+    results=cursor.fetchall()
+    return render(request,'room_filter.html',{'room_filter':results})
+
+def showfunction(request):
+    cursor=connection.cursor()
+    cursor.execute("select summation (1)")
+    results=cursor.fetchall()
+    return render(request,'summation.html',{'summation':results})

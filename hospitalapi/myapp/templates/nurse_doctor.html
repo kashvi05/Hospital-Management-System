@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{%extends 'index.html' %}
+{%load static%}
+{%block content%}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Hospital Management System!</title>
+  </head>
+
+  <body>
+      <center>
+        <br>
+        <br>
+      <form  method="POST">
+        {%csrf_token%}
+       Patient Id  <input type="text" name="pat_id">
+        <input type="submit"/>
+      </form>
+        <br>
+        <br>
+        <br>
+        <h1>Doctor and Nurse details of a Patient</h1>
+         <h3>Calling procedure nurse_doctor()</h3>
+         <hr>
+          <p></p>
+        <div class="container">
+
+         <table class='table table-striped table-hover'>
+             <tr>
+               <th scope='col'>Patient Id</th>
+               <th scope='col'>Patient Name</th>
+               <th scope='col'>Nurse Id</th>
+               <th scope='col'>Nurse Name</th>
+               <th scope='col'>Nurse Position</th>
+               <th scope='col'>Doctor Id</th>
+               <th scope='col'>Doctor Name</th>
+               <th scope='col'>Speciality</th>
+
+          </tr>
+
+               {% for data in nurse_doctor%}
+
+               <tr scope='row'>
+               <td >
+                 {{data.0}}
+               </td>
+               <td >
+                 {{data.1}}
+               </td>
+               <td >
+                 {{data.2}}
+               </td>
+               <td >
+                 {{data.3}}
+               </td>
+               <td >
+                 {{data.4}}
+               </td>
+               <td >
+                 {{data.5}}
+               </td>
+               <td >
+                 {{data.6}}
+               </td>
+               <td >
+                 {{data.7}}
+               </td>
+            </tr>
+              {%endfor%}
+         </table>
+
+  </div>
+
+      </center>
+  </body>
+
+</html>
+  {% endblock %}
