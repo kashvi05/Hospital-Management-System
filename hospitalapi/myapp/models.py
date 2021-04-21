@@ -88,9 +88,10 @@ class Billingmodel(models.Model):
         db_table='billing'
 
 class BloodBankmodel(models.Model):
+    Serial_No=IntegerField(primary_key=True)
     Date_issued=DateField()
-    Blood_Group=CharField(max_length=3,primary_key=True)
-    Pints_available=IntegerField()
+    Blood_Group=CharField(max_length=3)
+    Pints_donated=IntegerField()
     class Meta:
         db_table='blood_bank_records'
 
@@ -116,8 +117,56 @@ class Visitormodel(models.Model):
          db_table='visitors_table'
 
 class Emergencymodel(models.Model):
+    Patient_Id=IntegerField(primary_key=True)
     Patient_Name=CharField(max_length=300)
-    Room_No=IntegerField(primary_key=True)
+    Room_No=IntegerField()
     Contact_Number=CharField(max_length=10)
     class Meta:
         db_table='emergency_room_log'
+
+class diagnosis_patientmodel(models.Model):
+    Patient_Id=IntegerField()
+    Patient_Name=CharField(max_length=300)
+    Diagnosis_Details=CharField(max_length=300)
+    Purpose=CharField(max_length=300)
+    Remarks=CharField(max_length=300)
+    Prescription=CharField(max_length=300)
+
+class final_amount(models.Model):
+    Patient_Name=CharField(max_length=300)
+    Patient_Id=IntegerField()
+    Purpose=CharField(max_length=300)
+    Contact_No=CharField(max_length=10)
+    Total_Amount=float()
+
+class nurse_doctor(models.Model):
+    Patient_Id=IntegerField()
+    Patient_Name=CharField(max_length=300)
+    Nurse_Id=IntegerField()
+    Nurse_Name=CharField(max_length=300)
+    Nurse_Position=CharField(max_length=300)
+    Doctor_Id=IntegerField
+    Doctor_Name=CharField(max_length=300)
+    Doctor_Speciality=CharField(max_length=300)
+
+class patient_doctor(models.Model):
+    Patient_Id=IntegerField()
+    Patient_Name=CharField(max_length=300)
+    Appointment_Date=DateField()
+    Time=CharField(max_length=300)
+    Purpose=CharField(max_length=300)
+    Patient_Contact_No=CharField(max_length=10)
+    Doctor_Id=IntegerField()
+    Doctor_Name=CharField(max_length=300)
+    Room_No=IntegerField()
+
+class Blood_Group(models.Model):
+    count_pints=IntegerField()
+
+class room_filter(models.Model):
+    Room_No=IntegerField()
+    Room_type=CharField(max_length=300)
+    Availability_status=BooleanField()
+
+class summation(models.Model):
+    Total_Amount=FloatField()

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{%extends 'index.html' %}
+{%load static%}
+{%block content%}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Hospital Management System!</title>
+  </head>
+
+  <body>
+      <center>
+        <h1>Total amount of charges of patients</h1>
+         <h3>Calling procedure final_amount()</h3>
+         <hr>
+          <p></p>
+        <div class="container">
+
+         <table class='table table-striped table-hover'>
+             <tr>
+               <th scope='col'>Patient Name</th>
+               <th scope='col'>Patient Id</th>
+               <th scope='col'>Purpose</th>
+               <th scope='col'>Contact No</th>
+               <th scope='col'>Total Amount</th>
+
+          </tr>
+
+               {% for data in final_amount%}
+
+               <tr scope='row'>
+               <td >
+                 {{data.0}}
+               </td>
+               <td >
+                 {{data.1}}
+               </td>
+               <td >
+                 {{data.2}}
+               </td>
+               <td >
+                 {{data.3}}
+               </td>
+               <td >
+                 {{data.4}}
+               </td>
+            </tr>
+              {%endfor%}
+         </table>
+
+  </div>
+
+      </center>
+  </body>
+
+</html>
+  {% endblock %}

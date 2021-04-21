@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{%extends 'index.html' %}
+{%load static%}
+{%block content%}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Hospital Management System!</title>
+  </head>
+
+  <body>
+      <center>
+        <br>
+        <br>
+        <h3>Enter Blood Group:</h3>
+        <input type="text" name="">
+        <input type="submit" name="submit" value="Submit">
+        <br>
+        <br>
+        <br>
+         <h1>Pint donated for a Blood Group</h1>
+         <h3>Calling procedure Blood_Group()</h3>
+         <hr>
+          <p></p>
+        <div class="container">
+
+         <table class='table table-striped table-hover'>
+             <tr>
+               <th scope='col'>Total Pints donated</th>
+               <
+
+
+          </tr>
+               {% for data in Blood_Group%}
+               <tr scope='row'>
+               <td >
+                 {{data.0}}
+               </td>
+               <td >
+                 {{data.1}}
+               </td>
+               <td >
+                 {{data.2}}
+               </td>
+               <td >
+                 {{data.3}}
+               </td>
+               <td >
+                 {{data.4}}
+               </td>
+
+            </tr>
+              {%endfor%}
+         </table>
+
+  </div>
+
+      </center>
+  </body>
+
+</html>
+  {% endblock %}

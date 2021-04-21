@@ -29,6 +29,7 @@
 
          <table class='table table-striped table-hover'>
              <tr>
+               <th scope='col'>Serial No.</th>
                <th scope='col'>Date issued</th>
                <th scope='col'>Blood Group</th>
                <th scope='col'>Pints available</th>
@@ -37,6 +38,9 @@
           </tr>
                {% for data in BloodBankmodel%}
                <tr scope='row'>
+                 <td >
+                   {{data.Serial_No}}
+                 </td>
                <td >
                  {{data.Date_issued}}
                </td>
@@ -47,9 +51,9 @@
                  {{data.Pints_available}}
                </td>
               <td><a style="color:white; background-color:rgb(26,115,232);" class="btn btn-sm btn-info"
-     							href="{%url 'myapp:update_blood' data.Blood_Group%}"><b>Update</b></a></td>
+     							href="{%url 'myapp:update_blood' data.Serial_No%}"><b>Update</b></a></td>
      					<td><a style="color:white; background-color:rgb(217,48,37);" class="btn btn-sm btn-danger"
-     							href="{%url 'myapp:delete_blood' data.Blood_Group%}"><b>Delete</b></a></td>
+     							href="{%url 'myapp:delete_blood' data.Serial_No%}"><b>Delete</b></a></td>
                {%endfor%}
              </tr>
          </table>

@@ -16,10 +16,10 @@
 			<div class="card card-body" style="background-color:rgb(217,48,37); border-radius: 10px;">
 
 
-				<p style="color: white;"><strong>Are you sure you want to permanently remove {{item.Room_No}} room
+				<p style="color: white;"><strong>Are you sure you want to permanently remove {{item.Patient_Id}} patient id from emergency room log
 						?</strong></p>
 
-				<form action="{% url 'myapp:delete_emergency' item.Room_No  %}" method="POST">
+				<form action="{% url 'myapp:delete_emergency' item.Patient_Id  %}" method="POST">
 
 					{% csrf_token %}
 					<a style="color:black; background-color:white; border-radius: 20px;" class="btn btn-warning"
