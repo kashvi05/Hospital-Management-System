@@ -13,46 +13,33 @@
       <center>
         <br>
         <br>
-
-        <form  action="http://127.0.0.1:8000/procedure6/" method="POST">
+        <form  action="http://127.0.0.1:8000/function2/" method="POST">
           {%csrf_token%}
-          <h3>Enter Room type:</h3>
-          <input type="text" name="Room_type" >
-
-          <br>
-          <br>
-          <h3>Enter Availability Status:</h3>
-          <input type="number" name="Availability_status" >
+          <h3>Enter Room_No:</h3>
+          <input type="number" name="Room_No" >
           <input type="submit"/>
         </form>
         <br>
         <br>
         <br>
-        <h1>Room Availability</h1>
-         <h3>Calling procedure room_filter()</h3>
+        <h1>Number of beds</h1>
+         <h3>Calling function beds_in_room()</h3>
          <hr>
           <p></p>
         <div class="container">
 
          <table class='table table-striped table-hover'>
              <tr>
-               <th scope='col'>Room No</th>
-               <th scope='col'>Room type</th>
-                <th scope='col'>Availability Status</th>
+               <th scope='col'>Total beds in this room</th>
 
 
           </tr>
-               {% for data in room_filter%}
+               {% for data in beds_in_room%}
                <tr scope='row'>
                <td >
                  {{data.0}}
                </td>
-               <td >
-                 {{data.1}}
-               </td>
-               <td >
-                 {{data.2}}
-               </td>
+
             </tr>
               {%endfor%}
          </table>

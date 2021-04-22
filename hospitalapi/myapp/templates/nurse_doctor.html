@@ -12,9 +12,15 @@
       <center>
         <br>
         <br>
-      <form  method="POST">
+      <!-- <form  method="POST">
         {%csrf_token%}
        Patient Id  <input type="text" name="pat_id">
+        <input type="submit"/>
+      </form> -->
+      <form  action="http://127.0.0.1:8000/procedure3/" method="POST">
+        {%csrf_token%}
+        <h3>Enter Patient Id:</h3>
+        <input type="number" name="Patient_Id" >
         <input type="submit"/>
       </form>
         <br>
