@@ -149,6 +149,7 @@ class nurse_doctor(models.Model):
     Doctor_Name=CharField(max_length=300)
     Doctor_Speciality=CharField(max_length=300)
 
+
 class patient_doctor(models.Model):
     Patient_Id=IntegerField()
     Patient_Name=CharField(max_length=300)
@@ -170,3 +171,12 @@ class room_filter(models.Model):
 
 class summation(models.Model):
     Total_Amount=FloatField()
+
+class beds_in_room(models.Model):
+    Number_of_beds=IntegerField()
+
+class no_of_appointments(models.Model):
+    appointments=IntegerField
+
+class blood_group_func(models.Model):
+    total_patients=IntegerField()

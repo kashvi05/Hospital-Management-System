@@ -53,4 +53,7 @@ urlpatterns = [
     path('procedure5/', views.showprocedure5, name="procedure5"),
     path('procedure6/', views.showprocedure6, name="procedure6"),
     path('function/', views.showfunction, name="function"),
+    path('function2/', views.showfunction2, name="function2"),
+    path('function3/', views.showfunction3, name="function3"),
+    path('function4/', views.showfunction4, name="function4"),
 ]

@@ -13,9 +13,14 @@
       <center>
         <br>
         <br>
-        <h3>Enter Doctor Id:</h3>
-        <input type="text" name="">
-        <input type="submit" name="submit" value="Submit">
+        <form  action="http://127.0.0.1:8000/procedure4/" method="POST">
+          {%csrf_token%}
+          <h3>Enter Doctor Id:</h3>
+          <input type="number" name="Doctor_Id" >
+          <input type="submit"/>
+        </form>
+
+
         <br>
         <br>
         <br>

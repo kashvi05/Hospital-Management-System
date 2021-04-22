@@ -6,10 +6,12 @@ from django.shortcuts import render, redirect
 from django.db import connection
 import requests
 from .forms import PatientForm, DoctorForm, NurseForm, AppointmentForm, RoomForm, BillingForm, BloodBankForm,DiagnosisForm, VisitorForm, EmergencyForm
-from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel, Diagnosismodel, Visitormodel, Emergencymodel, diagnosis_patientmodel,final_amount,nurse_doctor,patient_doctor,room_filter,summation
+from .models import Patientmodel, Doctormodel, Nursemodel, Appointmentmodel, Roommodel, Billingmodel, BloodBankmodel, Diagnosismodel, Visitormodel, Emergencymodel, diagnosis_patientmodel,final_amount,nurse_doctor,patient_doctor,room_filter,summation,Blood_Group,room_filter,beds_in_room,no_of_appointments,blood_group_func
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from route_decorator import Route
+route=Route()
 
 @api_view(['GET'])
 def showPatient(request):
@@ -541,34 +543,116 @@ def showprocedure2(request):
     results=cursor.fetchall()
     return render(request,'final_amount.html',{'final_amount':results})
 
-
+@route('/nurse_doctor')
 def showprocedure3(request):
-    var = request.POST.get('pat_id')
-    cursor=connection.cursor()
-    cursor.execute("call nurse_doctor(3)")
-    results=cursor.fetchall()
-    return render(request,'nurse_doctor.html',{'nurse_doctor':results})
+  if request.method=='POST':
+     if request.POST.get('Patient_Id'):
+        saverecord=nurse_doctor()
+        saverecord.Patient_Id=request.POST.get('Patient_Id')
+        args=[request.POST.get('Patient_Id')]
+        cursor=connection.cursor()
+        cursor.callproc("nurse_doctor",args)
+        results=cursor.fetchall()
+        return render(request,'nurse_doctor.html',{'nurse_doctor':results})
+  else:
+       return render (request,'nurse_doctor.html')
 
+@route('/patient_doctor')
 def showprocedure4(request):
-    cursor=connection.cursor()
-    cursor.execute("call patient_doctor(7)")
-    results=cursor.fetchall()
-    return render(request,'patient_doctor.html',{'patient_doctor':results})
+  if request.method=='POST':
+     if request.POST.get('Doctor_Id'):
+        saverecord=patient_doctor()
+        saverecord.Patient_Id=request.POST.get('Doctor_Id')
+        args=[request.POST.get('Doctor_Id')]
+        cursor=connection.cursor()
+        cursor.callproc("patient_doctor",args)
+        results=cursor.fetchall()
+        return render(request,'patient_doctor.html',{'patient_doctor':results})
+  else:
+        return render (request,'patient_doctor.html')
 
+@route('/Blood_Group')
 def showprocedure5(request):
-    cursor=connection.cursor()
-    cursor.execute("call Blood_Group('AB-')")
-    results=cursor.fetchall()
-    return render(request,'Blood_Group.html',{'Blood_Group':results})
+  if request.method=='POST':
+     if request.POST.get('Blood_Group'):
+        saverecord=Blood_Group()
+        saverecord.Blood_Group=request.POST.get('Blood_Group')
+        args=[request.POST.get('Blood_Group')]
+        cursor=connection.cursor()
+        cursor.callproc("Blood_Group",args)
+        results=cursor.fetchall()
+        return render(request,'Blood_Group.html',{'Blood_Group':results})
+  else:
+       return render (request,'Blood_Group.html')
 
+@route('/room_filter')
 def showprocedure6(request):
-    cursor=connection.cursor()
-    cursor.execute("call room_filter('Premium',True)")
-    results=cursor.fetchall()
-    return render(request,'room_filter.html',{'room_filter':results})
+  if request.method=='POST':
+     if request.POST.get('Room_type'):
+        saverecord=room_filter()
+        saverecord.Room_type=request.POST.get('Room_type')
+        saverecord.Availability_status=request.POST.get('Availability_status')
+        args=[request.POST.get('Room_type'),request.POST.get('Availability_status')]
+        cursor=connection.cursor()
+        cursor.callproc("room_filter",args)
+        results=cursor.fetchall()
+        return render(request,'room_filter.html',{'room_filter':results})
+  else:
+       return render (request,'room_filter.html')
 
+@route('/summation')
 def showfunction(request):
-    cursor=connection.cursor()
-    cursor.execute("select summation (1)")
-    results=cursor.fetchall()
-    return render(request,'summation.html',{'summation':results})
+  if request.method=='POST':
+     if request.POST.get('Patient_Id'):
+        saverecord=summation()
+        saverecord.Patient_Id=request.POST.get('Patient_Id')
+        args=[request.POST.get('Patient_Id')]
+        cursor=connection.cursor()
+        cursor.callproc('summation',args)
+        results=cursor.fetchall()
+        return render(request,'summation.html',{'summation':results})
+  else:
+      return render (request,'summation.html')
+
+@route('/beds_in_room')
+def showfunction2(request):
+  if request.method=='POST':
+     if request.POST.get('Room_No'):
+        saverecord=beds_in_room()
+        saverecord.Room_No=request.POST.get('Room_No')
+        args=[request.POST.get('Room_No')]
+        cursor=connection.cursor()
+        cursor.callproc('beds_in_room',args)
+        results=cursor.fetchall()
+        return render(request,'beds_in_room.html',{'beds_in_room':results})
+  else:
+      return render (request,'beds_in_room.html')
+
+@route('/no_of_appointments')
+def showfunction3(request):
+  if request.method=='POST':
+     if request.POST.get('appointments'):
+        saverecord=no_of_appointments()
+        saverecord.Room_No=request.POST.get('appointments')
+        args=[request.POST.get('appointments')]
+        cursor=connection.cursor()
+        cursor.callproc('no_of_appointments',args)
+        results=cursor.fetchall()
+        return render(request,'no_of_appointments.html',{'no_of_appointments':results})
+  else:
+      return render (request,'no_of_appointments.html')
+
+
+@route('/blood_group_func')
+def showfunction4(request):
+  if request.method=='POST':
+     if request.POST.get('Blood_Group'):
+        saverecord=blood_group_func()
+        saverecord.Blood_Group=request.POST.get('Blood_Group')
+        args=[request.POST.get('Blood_Group')]
+        cursor=connection.cursor()
+        cursor.callproc("blood_group_func",args)
+        results=cursor.fetchall()
+        return render(request,'blood_group_func.html',{'blood_group_func':results})
+  else:
+       return render (request,'blood_group_func.html')
