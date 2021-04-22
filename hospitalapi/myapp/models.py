@@ -167,6 +167,7 @@ class Blood_Group(models.Model):
 class room_filter(models.Model):
     Room_No=IntegerField()
     Room_type=CharField(max_length=300)
+    Number_of_beds=IntegerField()
     Availability_status=BooleanField()
 
 class summation(models.Model):
