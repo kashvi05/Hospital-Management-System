@@ -31,5 +31,24 @@ Glimpse of Tables:
 
 1. Patient Table
 
-![image]()
+![image](https://user-images.githubusercontent.com/71372587/205971369-7baa8753-b3a8-40d1-bc32-af2dbfad0fa3.png)
+
+2. Appointment Table
+
+![image](https://user-images.githubusercontent.com/71372587/205971443-5af6e878-33ca-4b8d-9f84-e33f58add210.png)
+
+Adding Integrity Constraints:
+
+![image](https://user-images.githubusercontent.com/71372587/205971674-5a7d4860-d993-4a78-bb73-5dd4916b2dfd.png)
+
+CRUD Operations: 
+
+![image](https://user-images.githubusercontent.com/71372587/205971692-6b35d2bf-c4e8-4281-a2d8-fea3efb63108.png)
+![image](https://user-images.githubusercontent.com/71372587/205971726-802eeb23-6f97-4ba1-b54c-29f846c9d5f0.png)
+![image](https://user-images.githubusercontent.com/71372587/205971753-aa276344-6954-4bde-acdb-5964d635a9f1.png)
+![image](https://user-images.githubusercontent.com/71372587/205971781-c5543c1e-81e3-430a-86c7-fb6ad5dca95f.png)
+![image](https://user-images.githubusercontent.com/71372587/205971820-11a055a9-2c88-4717-b7e3-e2b134d3bc1b.png)
+
+
+
 
