@@ -49,6 +49,15 @@ CRUD Operations:
 ![image](https://user-images.githubusercontent.com/71372587/205971781-c5543c1e-81e3-430a-86c7-fb6ad5dca95f.png)
 ![image](https://user-images.githubusercontent.com/71372587/205971820-11a055a9-2c88-4717-b7e3-e2b134d3bc1b.png)
 
+Stored Procedures: 
+
+![image](https://user-images.githubusercontent.com/71372587/205972590-ef5448a8-e72e-481d-bba2-ed502200bec2.png)
+
+Stored Functions: 
+
+![image](https://user-images.githubusercontent.com/71372587/205972788-bb07e037-27fa-4e53-a0e7-4f2460801eeb.png)
+![image](https://user-images.githubusercontent.com/71372587/205972810-65e70842-c1b3-435b-9d2a-d30dd084e5c9.png)
+
 
 
 
