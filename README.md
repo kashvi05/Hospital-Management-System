@@ -58,6 +58,9 @@ Stored Functions:
 ![image](https://user-images.githubusercontent.com/71372587/205972788-bb07e037-27fa-4e53-a0e7-4f2460801eeb.png)
 ![image](https://user-images.githubusercontent.com/71372587/205972810-65e70842-c1b3-435b-9d2a-d30dd084e5c9.png)
 
+Please find the details and pictures of the entire project in the file attached:
 
 
+
+[Hospital_Management_System_Sanya Zaveri_AU1920064_Khushi Shah_AU1920171_Kashvi Gandhi_AU1940175_Kairavi Shah_AU1940177.docx (1).pdf](https://github.com/kashvi05/Hospital-Management-System/files/10168593/Hospital_Management_System_Sanya.Zaveri_AU1920064_Khushi.Shah_AU1920171_Kashvi.Gandhi_AU1940175_Kairavi.Shah_AU1940177.docx.1.pdf)
 
